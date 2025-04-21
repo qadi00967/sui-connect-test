@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
         alert("Sui Wallet not found. Please install it first.");
         return;
       }
+
       try {
         const accounts = await window.suiWallet.requestAccounts();
         const address = accounts[0];
@@ -21,7 +23,7 @@
 </head>
 <body style="background:#111; color:white; font-family:sans-serif; text-align:center; padding:40px;">
   <h1>Connect Sui Wallet</h1>
-  <button onclick="connectSuiWallet()" style="padding:12px 24px; font-size:16px; background:#04ff7c; border:none; border-radius:8px; cursor:pointer;">
+  <button onclick="connectSuiWallet()" style="padding:12px 24px; font-size:16px; background:#04f7c7; border:none; border-radius:8px; cursor:pointer;">
     Connect Wallet
   </button>
 </body>
