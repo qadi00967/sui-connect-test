@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sui Wallet Connect</title>
+  <script type="module">
+    import {
+      WalletProvider,
+      WalletModal,
+      WalletStandardAdapterProvider,
+    } from "https://cdn.jsdelivr.net/npm/@mysten/wallet-kit@latest/+esm";
+
+    import { getWallets } from "https://cdn.jsdelivr.net/npm/@mysten/wallet-standard@latest/+esm";
+
+    window.onload = () => {
+      const mount = document.getElementById("wallet-connect");
+
+      const wallets = getWallets();
+      if (!wallets.length) {
+        mount.innerHTML = "<p>No Sui wallets found.</p>";
+        return;
+      }
+
+      const button = document.createElement("button");
+      button.textContent = "Connect Wallet";
+      button.style.padding = "10px 20px";
+      button.style.fontSize = "16px";
+      button.onclick = async () => {
+        const wallet = wallets[0];
+        try {
+          await wallet.features["standard:connect"].connect();
+          const accounts = wallet.accounts;
+          const address = accounts[0]?.address ?? "No address found";
+          button.textContent = "Connected: " + address.slice(0, 6) + "..." + address.slice(-4);
+        } catch (e) {
+          alert("Connection failed.");
+        }
+      };
+      mount.appendChild(button);
+    };
+  </script>
+</head>
+<body style="background-color:#111; color:white; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh;">
+  <div id="wallet-connect"></div>
+</body>
+</html>
