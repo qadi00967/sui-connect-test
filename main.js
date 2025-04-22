@@ -1,21 +1,15 @@
+import React from "react";
+import { WalletKitProvider, ConnectButton } from "@mysten/wallet-kit";
 
-import { getWallets } from "https://cdn.jsdelivr.net/npm/@mysten/wallet-standard@latest";
+function App() {
+  return (
+    <WalletKitProvider>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "5rem" }}>
+        <h1 style={{ color: "white" }}>Connect Sui Wallet</h1>
+        <ConnectButton />
+      </div>
+    </WalletKitProvider>
+  );
+}
 
-const connectButton = document.getElementById("connectButton");
-const walletAddressText = document.getElementById("walletAddress");
-
-connectButton.addEventListener("click", async () => {
-    const wallets = getWallets();
-    const available = wallets.get();
-
-    if (!available.length) {
-        alert("No Sui wallets found. Please install a wallet extension.");
-        return;
-    }
-
-    const wallet = available[0]; // نختار أول محفظة
-    await wallet.features["standard:connect"].connect();
-    const accounts = await wallet.features["sui:accounts"].getAccounts();
-
-    walletAddressText.textContent = accounts[0].address || "No address found";
-});
+export default App;
