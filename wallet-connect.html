@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sui Wallet Connect</title>
+    <script type="module">
+      import { WalletProvider, WalletKitProvider, WalletModal } from 'https://unpkg.com/@mysten/wallet-kit?module';
+      import { createSignal, onCleanup } from 'https://cdn.jsdelivr.net/npm/solid-js@1.7.0/web/dist/web.module.js';
+
+      window.onload = () => {
+        const mount = document.getElementById('mount');
+        const btn = document.createElement('button');
+        btn.innerText = 'Connect Sui Wallet';
+        btn.style.padding = '10px 20px';
+        btn.style.fontSize = '18px';
+        btn.onclick = async () => {
+          const wallets = window.navigator.wallets;
+          if (!wallets || wallets.length === 0) {
+            alert("No Sui wallets found.");
+            return;
+          }
+          try {
+            const wallet = wallets[0];
+            await wallet.connect();
+            alert("Wallet connected: " + wallet.accounts[0].address);
+          } catch (e) {
+            alert("Connection failed.");
+          }
+        };
+        mount.appendChild(btn);
+      };
+    </script>
+  </head>
+  <body style="background:#111; color:white; display:flex; justify-content:center; align-items:center; height:100vh">
+    <div id="mount"></div>
+  </body>
+</html>
